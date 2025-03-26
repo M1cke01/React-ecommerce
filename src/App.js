@@ -1,16 +1,72 @@
-import { Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import React from "react";
+import React, { useState } from 'react';
+import { AppHeader, HeaderTitle, ProductContainer } from './styles/styles';
+import AddProduct from './components/AddProduct';
+import { Provider, useSelector } from "react-redux";
+import { store } from './components/store/store';
+import Login from './components/Login';
+import { Button } from './components/AddProduct/styles';
 
-function App() {
+const App = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  const [cart, setCart] = useState({});
+
+  const addToCart = (id) => {
+    setCart((prevCart) => ({
+        ...prevCart,
+        [id]: (prevCart[id] || 0) + 1
+      }));
+  };
+
+  const removeFromCart = (id) => {
+    setCart((prevCart) => {
+      const updateCart = { ...prevCart };
+      updateCart[id] -= 1;
+      if (updateCart[id] === 0) {
+        delete updateCart[id];
+      }
+      return updateCart;
+    });
+  };
+
+  const [viewCart, setViewCart] = useState(false);
+
   return (
-    <Routes>
-      <Route path="/" element={<h2>Bienvenido</h2>} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-    </Routes>
+    <Provider store={store}>
+      <div>
+        {isAuthenticated ? (
+          <ProductContainer>
+            <AppHeader>
+              <HeaderTitle>Lista de productos</HeaderTitle>
+            </AppHeader>
+            {viewCart ? (
+              <div>
+                <h2>Carrito</h2>
+                <p>Productos agregados</p>
+                <ul>
+                  {Object.keys(cart).map((id) => (
+                    <li key={id}>
+                      <p>Producto {id} - Cantidad: {cart[id]} </p>
+                      <Button onClick={() => removeFromCart(id)}>Quitar</Button>
+                    </li>
+                  ))}
+                </ul>
+                <Button onClick={() => setViewCart(false)}>Regresar a la lista de productos</Button>
+              </div>
+            ) : (
+              <AddProduct 
+                setViewCart={setViewCart}
+                addToCart={addToCart}
+                cart={cart}
+              />
+            )}
+          </ProductContainer>
+        ) : (
+          <Login />
+        )}
+      </div>
+    </Provider>
   );
-}
+};
 
 export default App;

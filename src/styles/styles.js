@@ -1,40 +1,26 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-export const Container = styled.div`
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 20px;
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
+const ProductContainer = styled.main`
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 25px;
+    box-sizing: border-box;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 `;
 
-export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+const AppHeader = styled.header`
+    padding: 25px;
+    box-sizing: border-box;
+    background-color: #215455;
+    color: white;
 `;
 
-export const Input = styled.input`
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+const HeaderTitle = styled.h1`
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+    font-size: 24px;
 `;
 
-export const Button = styled.button`
-  padding: 10px;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  &:hover {
-    background: #0056b3;
-  }
-`;
-
-export const ErrorText = styled.p`
-  color: red;
-  font-size: 14px;
-`;
+export { ProductContainer, AppHeader, HeaderTitle }
