@@ -4,7 +4,7 @@ import AddProduct from './components/AddProduct';
 import { Provider, useSelector } from "react-redux";
 import { store } from './components/store/store';
 import Login from './components/Login';
-import { Button } from './components/AddProduct/styles';
+import { ButtonQuit, ButtonReturn } from './components/AddProduct/styles';
 
 const App = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -47,16 +47,17 @@ const App = () => {
                   {Object.keys(cart).map((id) => (
                     <li key={id}>
                       <p>Producto {id} - Cantidad: {cart[id]} </p>
-                      <Button onClick={() => removeFromCart(id)}>Quitar</Button>
+                      <ButtonQuit onClick={() => removeFromCart(id)}>Quitar</ButtonQuit>
                     </li>
                   ))}
                 </ul>
-                <Button onClick={() => setViewCart(false)}>Regresar a la lista de productos</Button>
+                <ButtonReturn onClick={() => setViewCart(false)}>Regresar a la lista de productos</ButtonReturn>
               </div>
             ) : (
               <AddProduct 
                 setViewCart={setViewCart}
                 addToCart={addToCart}
+                removeFromCart={removeFromCart}
                 cart={cart}
               />
             )}

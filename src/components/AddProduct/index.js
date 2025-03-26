@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, CartButton, FormContainer} from "./styles";
+import React from "react";
+import { Button, ButtonContainer, CartButton, FormContainer, ProductImage, ProductItem, ProductList, ProductName, ProductPrice} from "./styles";
 
 const products = [
     {id: 1, nombre: "Pantalón", precio: 400, imagen: "NULL"},
@@ -9,46 +9,28 @@ const products = [
     {id: 5, nombre: "Chamarra", precio: 2000, imagen: "NULL"}
 ];
 
-const AddProduct = ({ setViewCart }) => {
-    const [cart, setCart] = useState({});
-
-    const addToCart = (id) => {
-        setCart((prevCart) => ({
-            ...prevCart,
-            [id]: (prevCart[id] || 0) + 1
-        }));
-    };
-
-    const removeFromCart = (id) => {
-        setCart((prevCart) => {
-            if (!prevCart[id]) return prevCart;
-            const updateCart = { ...prevCart };
-            updateCart[id] -= 1;
-            if (updateCart[id] === 0) {
-                delete updateCart[id];
-            }
-            return updateCart;
-        });
-    };
+const AddProduct = ({ setViewCart, addToCart, cart }) => {
 
     const totalItems = Object.values(cart).reduce((acc, qty) => acc + qty, 0);
 
     return(
         <FormContainer>
-            <CartButton onClick={() => setViewCart(true)}>
-                Ver carrto ({totalItems})
-            </CartButton>
-            <ul>
+            <ProductList>
                 {products.map((product) => (
-                    <li key={product.id}>
-                        <img src={product.imagen} alt= {product.nombre} />
-                        <p>{product.nombre} - ${product.precio}</p>
-                        <Button onClick={() => addToCart(product.id)}>Agregar al carrito</Button>
-                        <Button onClick={() => removeFromCart(product.id)}>Quitar</Button>   
+                    <ProductItem key={product.id}>
+                        <ProductImage src={product.imagen} alt= {product.nombre} />
+                        <ProductName>{product.nombre}</ProductName>
+                        <ProductPrice> ${product.precio}</ProductPrice>
+                        <Button onClick={() => addToCart(product.id)}>Agregar al carrito</Button>  
                         <span>Cantidad: {cart[product.id] || 0}</span>
-                    </li>
+                    </ProductItem>
                 ))}
-            </ul>
+            </ProductList>
+            <ButtonContainer>
+                <CartButton onClick={() => setViewCart(true)}>
+                    Ver carrito ({totalItems})
+                </CartButton>
+            </ButtonContainer>
         </FormContainer>
     )
 
