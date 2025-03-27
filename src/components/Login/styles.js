@@ -60,4 +60,20 @@ const ErrorMessage = styled.p`
     padding-bottom: 10px;
 `;
 
-export { LoginContainer, LoginForm, Input, Button, Title, ErrorMessage };
+const ButtonLogout = styled.button`
+    width: 10%;
+    padding: 12px;
+    background-color:rgb(179, 209, 9);
+    border: none;
+    color: white;
+    color: #000;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #0056b3;
+    }
+`
+
+export { LoginContainer, LoginForm, Input, Button, Title, ErrorMessage, ButtonLogout };

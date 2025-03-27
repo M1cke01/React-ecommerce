@@ -6,19 +6,21 @@ const products = [
     {id: 2, nombre: "Camisa", precio: 200, imagen: "NULL"},
     {id: 3, nombre: "Gorra", precio: 1500, imagen: "NULL"},
     {id: 4, nombre: "Zapatos", precio: 2500, imagen: "NULL"},
-    {id: 5, nombre: "Chamarra", precio: 2000, imagen: "NULL"}
+    {id: 5, nombre: "Chamarra", precio: 2000, imagen: "NULL"},
 ];
 
-const AddProduct = ({ setViewCart, addToCart, cart }) => {
+const AddProduct = ({ setViewCart, addToCart, cart, setProducts, cartCount }) => {
 
-    const totalItems = Object.values(cart).reduce((acc, qty) => acc + qty, 0);
+    React.useEffect(() => {
+        setProducts(products);
+    }, [setProducts]);
 
     return(
         <FormContainer>
             <ProductList>
                 {products.map((product) => (
                     <ProductItem key={product.id}>
-                        <ProductImage src={product.imagen} alt= {product.nombre} />
+                        <ProductImage src={product.imagen} alt= {""} />
                         <ProductName>{product.nombre}</ProductName>
                         <ProductPrice> ${product.precio}</ProductPrice>
                         <Button onClick={() => addToCart(product.id)}>Agregar al carrito</Button>  
@@ -28,7 +30,7 @@ const AddProduct = ({ setViewCart, addToCart, cart }) => {
             </ProductList>
             <ButtonContainer>
                 <CartButton onClick={() => setViewCart(true)}>
-                    Ver carrito ({totalItems})
+                    Ver carrito ({cartCount})
                 </CartButton>
             </ButtonContainer>
         </FormContainer>
